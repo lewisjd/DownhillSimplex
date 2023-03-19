@@ -14,7 +14,7 @@
  *                                                   *
  *****************************************************/
 
-/*#include <stdio.h>
+#include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
 
@@ -230,4 +230,4 @@ int main() {
     simplex(P);
 
     return 0;
-}*/
+}
