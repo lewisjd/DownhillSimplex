@@ -167,7 +167,7 @@ void simplex(Point P[]) {
             
             // If Y* is less than Yh
             if (Ys < Y[N]) {
-                contract(&Pss, P, &Pbar, &Ps, 0); // Calculate P**; contract P* away from Pbar
+                contract(&Pss, P, &Pbar, &Ps, 0); // Calculate P**: contract P* away from Pbar
                 Yss = func(Pss);
 
                 // If Y** is less than Y*
@@ -181,7 +181,7 @@ void simplex(Point P[]) {
             }
 
             else {
-                contract(&Pss, P, &Pbar, NULL, 1); // Calculate P**; contract Ph towards Pbar
+                contract(&Pss, P, &Pbar, NULL, 1); // Calculate P**: contract Ph towards Pbar
                 Yss = func(Pss);
 
                 // If Y** is less than Yh
