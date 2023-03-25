@@ -76,7 +76,7 @@ void reflect(Point* Ps, Point* Pbar, Point P[]) {
     }
 }
 
-// Contract the worst point (Ph) towards or reflected point (P*) away from the centroid (Pbar)
+// Contract the worst point (Ph) or reflected point (P*) towards the centroid (Pbar)
 void contract(Point* Pss, Point P[], Point* Pbar, Point* Ps, bool inside) {
     for (int i = 0; i < N; i++) {
         if (inside) {
@@ -135,6 +135,11 @@ void simplex(Point P[]) {
             Y[i] = func(P[i]);
         }
 
+        // Check for convergence
+        if (minCon(Y)) {
+            break;
+        }
+
         // Sort points and find centroid
         sortPoints(Y, P);
         centroid(P, &Pbar);
@@ -167,7 +172,7 @@ void simplex(Point P[]) {
             
             // If Y* is less than Yh
             if (Ys < Y[N]) {
-                contract(&Pss, P, &Pbar, &Ps, 0); // Calculate P**: contract P* away from Pbar
+                contract(&Pss, P, &Pbar, &Ps, 0); // Calculate P**; contract P* away from Pbar
                 Yss = func(Pss);
 
                 // If Y** is less than Y*
@@ -181,7 +186,7 @@ void simplex(Point P[]) {
             }
 
             else {
-                contract(&Pss, P, &Pbar, NULL, 1); // Calculate P**: contract Ph towards Pbar
+                contract(&Pss, P, &Pbar, NULL, 1); // Calculate P**; contract Ph towards Pbar
                 Yss = func(Pss);
 
                 // If Y** is less than Yh
@@ -193,11 +198,6 @@ void simplex(Point P[]) {
                     shrink(P); // Shrink all points towards Pl
                 }
             }
-        }
-
-        // Check for convergence
-        if (minCon(Y)) {
-            break;
         }
     }
 
@@ -216,10 +216,10 @@ void simplex(Point P[]) {
 
     printf("\nEvaluations:\n");
     for (int i = 0; i < N + 1; i++) {
-        printf("%lf\n", func(P[i]));
+        printf("%lf\n", Y[i]);
     }
 
-    printf("\nIterations: %d\n", a + 1);
+    printf("\nIterations: %d\n", a);
 }
 
 int main() {
